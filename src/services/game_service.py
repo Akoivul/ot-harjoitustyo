@@ -17,4 +17,4 @@ class GameService:
         return self._game_repository.delete_game(name)
 
 
-game_service = GameService()
+game_service = GameService(game_repository, user_repository)

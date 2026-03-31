@@ -11,11 +11,3 @@ class UI:
 
         label.pack()
         button.pack()
-
-window = Tk()
-window.title("TkInter example")
-
-ui = UI(window)
-ui.start()
-
-window.mainloop()

@@ -10,7 +10,6 @@ class UserRepository:
         cursor.execute("select * from users")
         all_users = cursor.fetchall()
         users = []
-
         for user in all_users:
             users.append(User(user[0], user[1]))
 

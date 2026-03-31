@@ -2,11 +2,12 @@ from tkinter import Tk
 from ui.ui import UI
 
 def main():
-    window = Tk()
-    window.title("Game Backlog")
-    ui = UI(window)
+    root = Tk()
+    root.title("Game Backlog")
+    root.geometry("700x500")
+    ui = UI(root)
     ui.start()
-    window.mainloop()
+    root.mainloop()
 
 if __name__=="__main__":
     main()

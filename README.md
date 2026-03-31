@@ -1,14 +1,36 @@
-# Ohjelmistotekniikka, harjoitustyö
-## Tehtävät
+# Game Backlog
 
-### Viikko 1
-[Laskarit](https://github.com/Akoivul/ot-harjoitustyo/tree/master/laskarit)
-
-Aion tehdä *luultavasti* **pelin** tai jonkin **soittimen simulointia**.
-
-### Viikko 2
-[Laskarit](https://github.com/Akoivul/ot-harjoitustyo/tree/master/laskarit/viikko2)
-
+Sovelluksen avulla voi seurata ja hallita peli backlogia.
+## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
 [Työaikakirjanpito](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
+
+[Changelog](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/changelog.md)
+
+## Asennus
+
+1. Asenna riippuvuudet:
+```
+poetry install
+```
+2. Alusta tietokanta:
+```
+poetry run invoke build
+```
+3. Käynnistä sovellus:
+```
+poetry run invoke start
+```
+
+## Muut komennot
+
+Aja testit:
+```
+poetry run invoke test
+```
+Generoi testikattavuusraportti:
+```
+poetry run invoke coverage-report
+```
+Raportti on hakemistossa htmlcov tiedosto index.html

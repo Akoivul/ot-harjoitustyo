@@ -16,11 +16,11 @@ class GameService:
 
     def delete_game_from_backlog(self, name):
         return self._game_repository.delete_game(name)
-    
+
     def register_user(self, username, password):
         if self._user_repository.find_user(username):
             raise Exception("User already exists")
-        
+
         user = User(username, password)
         return self._user_repository.add_user(user)
 

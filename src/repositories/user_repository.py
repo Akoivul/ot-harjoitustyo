@@ -15,7 +15,7 @@ class UserRepository:
             users.append(User(user[0], user[1]))
 
         return users
-    
+
     def find_user(self, username):
         cursor = self._connection.cursor()
         cursor.execute("select * from users where username = ?", (username,))
@@ -23,7 +23,7 @@ class UserRepository:
 
         if found_user:
             return User(found_user["username"], found_user["password"])
-        
+
         return None
 
     def add_user(self, user):
@@ -31,7 +31,7 @@ class UserRepository:
         cursor.execute("insert into users (username, password) values (?, ?)",
                        (user.username, user.password))
         self._connection.commit()
-    
+
     def delete_all(self):
         cursor = self._connection.cursor()
         cursor.execute("delete from users")

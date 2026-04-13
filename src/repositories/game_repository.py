@@ -16,13 +16,13 @@ class GameRepository:
 
         return games
 
-    def find_game(self, name):
+    def find_game_by_user(self, name, user):
         cursor = self._connection.cursor()
-        cursor.execute("select * from games where name = ?", (name,))
+        cursor.execute("select * from games where name = ? and user = ?", (name, user,))
         found_game = cursor.fetchone()
 
         if found_game:
-            return Game(found_game["name"], found_game["state"])
+            return Game(found_game["name"], found_game["status"], found_game["user"])
 
         return None
 

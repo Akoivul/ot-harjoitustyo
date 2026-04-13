@@ -34,3 +34,8 @@ Generoi testikattavuusraportti:
 poetry run invoke coverage-report
 ```
 Raportti on hakemistossa htmlcov tiedosto index.html
+
+Pylint tarkistus:
+```
+poetry run invoke lint
+```

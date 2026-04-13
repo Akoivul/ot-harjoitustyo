@@ -24,7 +24,8 @@ def create_tables(connection):
     cursor.execute('''
         create table games (
             name text primary key,
-            state text
+            status text,
+            user text
         );
     ''')
 

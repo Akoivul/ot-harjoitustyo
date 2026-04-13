@@ -6,20 +6,30 @@ class GameRepository:
     def __init__(self, connection):
         self._connection = connection
 
-    def find_all_games(self):
+    def find_all_games_by_user(self, user):
         cursor = self._connection.cursor()
-        cursor.execute("select * from games")
+        cursor.execute("select * from games where user = ?", (user,))
         all_games = cursor.fetchall()
         games = []
         for game in all_games:
-            games.append(Game(game[0], game[1]))
+            games.append(Game(game[0], game[1], game[2]))
 
         return games
+
+    def find_game(self, name):
+        cursor = self._connection.cursor()
+        cursor.execute("select * from games where name = ?", (name,))
+        found_game = cursor.fetchone()
+
+        if found_game:
+            return Game(found_game["name"], found_game["state"])
+
+        return None
 
     def add_game(self, game):
         cursor = self._connection.cursor()
         cursor.execute(
-            "insert into games (name, state) values (?, ?)", (game.name, game.status))
+            "insert into games (name, status, user) values (?, ?, ?)", (game.name, game.status, game.user,))
         self._connection.commit()
 
     def delete_game(self, name):

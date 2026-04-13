@@ -13,11 +13,11 @@ class GameService:
     def get_all_games(self):
         return self._game_repository.find_all_games_by_user(self._logged_in_user.username)
 
-    def add_game_to_backlog(self, name, state):
+    def add_game_to_backlog(self, name, status):
         if self._game_repository.find_game_by_user(name, self._logged_in_user.username):
             raise ValueError("Game already in backlog")
         
-        game = Game(name, state, self._logged_in_user.username)
+        game = Game(name, status, self._logged_in_user.username)
         return self._game_repository.add_game(game)
 
     def delete_game_from_backlog(self, name):

@@ -72,7 +72,7 @@ class UI:
         ttk.Entry(self._root, textvariable=self._game_status_var).pack()
 
         ttk.Button(self._root, text="Add", command=self._add_game).pack()
-        ttk.Button(self._root, text="Back to Login",
+        ttk.Button(self._root, text="Sign out",
                    command=self._show_login).pack()
 
         ttk.Label(self._root, textvariable=self._message_var).pack()

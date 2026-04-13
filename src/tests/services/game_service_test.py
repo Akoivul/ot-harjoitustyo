@@ -12,9 +12,10 @@ class TestGameService(unittest.TestCase):
             "test_username1", "test_password1")
 
     def test_register_user_successfully(self):
-        user = user_repository.find_user("test_username1")
+        game_service.register_user("test_username2", "test_password2")
+        user = user_repository.find_user("test_username2")
 
-        self.assertEqual(user.username, "test_username1")
+        self.assertEqual(user.username, "test_username2")
 
     def test_register_user_when_user_already_exists(self):
         with self.assertRaises(Exception):

@@ -18,7 +18,8 @@ class GameRepository:
 
     def find_game_by_user(self, name, user):
         cursor = self._connection.cursor()
-        cursor.execute("select * from games where name = ? and user = ?", (name, user,))
+        cursor.execute(
+            "select * from games where name = ? and user = ?", (name, user,))
         found_game = cursor.fetchone()
 
         if found_game:
@@ -29,7 +30,8 @@ class GameRepository:
     def add_game(self, game):
         cursor = self._connection.cursor()
         cursor.execute(
-            "insert into games (name, status, user) values (?, ?, ?)", (game.name, game.status, game.user,))
+            "insert into games (name, status, user) values (?, ?, ?)", (game.name, 
+                                                                        game.status, game.user,))
         self._connection.commit()
 
     def delete_game(self, name):

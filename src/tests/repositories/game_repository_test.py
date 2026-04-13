@@ -43,12 +43,12 @@ class TestGameRepository(unittest.TestCase):
         self.assertEqual(games_1[0].status, self.test_game_1.status)
         self.assertEqual(games_2[0].name, self.test_game_2.name)
         self.assertEqual(games_2[0].status, self.test_game_2.status)
-    
+
     def test_find_game_by_user(self):
         game_repository.add_game(self.test_game_1)
-        game = game_repository.find_game_by_user(self.test_game_1.name, self.test_game_1.user)
+        game = game_repository.find_game_by_user(
+            self.test_game_1.name, self.test_game_1.user)
 
         self.assertEqual(game.name, self.test_game_1.name)
         self.assertEqual(game.status, self.test_game_1.status)
         self.assertEqual(game.user, self.test_game_1.user)
-

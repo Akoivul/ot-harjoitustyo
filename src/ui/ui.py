@@ -9,7 +9,7 @@ class UI:
     def start(self):
 # generoitu koodi alkaa
         self._show_login()
-    
+
     def _clear_view(self):
         for widget in self._root.winfo_children():
             widget.destroy()
@@ -30,7 +30,8 @@ class UI:
         ttk.Entry(self._root, textvariable=self._password_var, show="*").pack()
 
         ttk.Button(self._root, text="Login", command=self._login).pack()
-        ttk.Button(self._root, text="Register", command=self._show_register).pack()
+        ttk.Button(self._root, text="Register",
+                   command=self._show_register).pack()
 
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
@@ -50,7 +51,8 @@ class UI:
         ttk.Entry(self._root, textvariable=self._password_var, show="*").pack()
 
         ttk.Button(self._root, text="Register", command=self._register).pack()
-        ttk.Button(self._root, text="Back to Login", command=self._show_login).pack()
+        ttk.Button(self._root, text="Back to Login",
+                   command=self._show_login).pack()
 
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
@@ -70,11 +72,13 @@ class UI:
         ttk.Entry(self._root, textvariable=self._game_status_var).pack()
 
         ttk.Button(self._root, text="Add", command=self._add_game).pack()
-        ttk.Button(self._root, text="Back to Login", command=self._show_login).pack()
+        ttk.Button(self._root, text="Back to Login",
+                   command=self._show_login).pack()
 
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
-        self._tree = ttk.Treeview(self._root, columns=("name", "status"), show="headings")
+        self._tree = ttk.Treeview(self._root, columns=(
+            "name", "status"), show="headings")
         self._tree.heading("name", text="Game")
         self._tree.heading("status", text="Status")
         self._tree.column("name", width=200)
@@ -91,7 +95,7 @@ class UI:
             game_service.add_game_to_backlog(game_name, game_status)
             self._game_name_var.set("")
             self._game_status_var.set("")
-            
+
             self._update_games()
         except Exception as error:
             self._message_var.set(str(error))

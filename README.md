@@ -8,6 +8,8 @@ Sovelluksen avulla voi seurata ja hallita peli backlogia.
 
 [Changelog](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/changelog.md)
 
+[Arkkitehtuuri](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
 ## Asennus
 
 1. Asenna riippuvuudet:

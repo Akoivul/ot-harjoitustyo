@@ -9,4 +9,4 @@
 | 13.4 | 4 | Käyttäjän kirjautuminen sisään, luokkien ja metodien muokkaamista niin, että kirjautuminen toimii oikein, lisää testejä, alustava UI, missä voi rekisteröityä, kirjautua sisään ja lisätä pelejä, lint invoke task|
 | 14.4 | 1 | Alustava luokkakaavio ja viikko 4 changelogiin|
 | 19.4 | 3 | Luokkakaavion korjaus, pelin tilan muuttamisen lisääminen, pelin tilan muuttamiselle yksi testi, käyttöliittymän päivittäminen, yleisiä parannuksia metodeihin ja testeihin |
-| Yhteensä | 17 |
+| Yhteensä | 20 |

@@ -5,7 +5,7 @@ from ui.ui import UI
 def main():
     root = Tk()
     root.title("Game Backlog")
-    root.geometry("700x500")
+    root.geometry("1000x700")
     ui = UI(root)
     ui.start()
     root.mainloop()

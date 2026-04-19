@@ -21,7 +21,7 @@ class UI:
         self._password_var = StringVar()
         self._message_var = StringVar()
 
-        ttk.Label(self._root, text="Login").pack()
+        ttk.Label(self._root, text="Login", font=("Arial", 16, "bold")).pack()
 
         ttk.Label(self._root, text="Username").pack()
         ttk.Entry(self._root, textvariable=self._username_var).pack()
@@ -42,7 +42,7 @@ class UI:
         self._password_var = StringVar()
         self._message_var = StringVar()
 
-        ttk.Label(self._root, text="Register").pack()
+        ttk.Label(self._root, text="Register", font=("Arial", 16, "bold")).pack()
 
         ttk.Label(self._root, text="Username").pack()
         ttk.Entry(self._root, textvariable=self._username_var).pack()
@@ -63,27 +63,43 @@ class UI:
         self._game_status_var = StringVar()
         self._message_var = StringVar()
 
-        ttk.Label(self._root, text="Game Backlog").pack()
+        ttk.Label(self._root, text="Game Backlog", font=("Arial", 16, "bold")).pack()
 
         ttk.Label(self._root, text="Game").pack()
         ttk.Entry(self._root, textvariable=self._game_name_var).pack()
 
         ttk.Label(self._root, text="Status").pack()
-        ttk.Entry(self._root, textvariable=self._game_status_var).pack()
+        ttk.Combobox(
+            self._root,
+            textvariable=self._game_status_var,
+            values=["Backlog", "In Progress", "Completed"],
+            state = "readonly"
+        ).pack()
 
         ttk.Button(self._root, text="Add", command=self._add_game).pack()
-        ttk.Button(self._root, text="Sign out",
-                   command=self._show_login).pack()
+        ttk.Button(self._root, text="Sign out", command=self._show_login).pack()
 
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
-        self._tree = ttk.Treeview(self._root, columns=(
-            "name", "status"), show="headings")
-        self._tree.heading("name", text="Game")
-        self._tree.heading("status", text="Status")
-        self._tree.column("name", width=200)
-        self._tree.column("status", width=100)
-        self._tree.pack()
+        board = ttk.Frame(self._root)
+        board.pack(fill="both", expand=True)
+
+        self._backlog_frame = ttk.Frame(board)
+        self._progress_frame = ttk.Frame(board)
+        self._done_frame = ttk.Frame(board)
+
+        self._backlog_frame.pack(side="left", fill="both", expand=True, padx=10)
+        self._progress_frame.pack(side="left", fill="both", expand=True, padx=10)
+        self._done_frame.pack(side="left", fill="both", expand=True, padx=10)
+
+        ttk.Label(self._backlog_frame, text="Backlog",
+              font=("Arial", 12, "bold")).pack(pady=5)
+
+        ttk.Label(self._progress_frame, text="In Progress",
+                font=("Arial", 12, "bold")).pack(pady=5)
+
+        ttk.Label(self._done_frame, text="Completed",
+                font=("Arial", 12, "bold")).pack(pady=5)
 
         self._update_games()
 
@@ -99,15 +115,49 @@ class UI:
             self._update_games()
         except Exception as error:
             self._message_var.set(str(error))
+    
+    def _change_status(self, name, new_status):
+        game_service.change_game_status(name, new_status)
+        self._update_games()
 
     def _update_games(self):
-        for item in self._tree.get_children():
-            self._tree.delete(item)
+        for frame in [
+            self._backlog_frame,
+            self._progress_frame,
+            self._done_frame
+        ]:
+            for widget in frame.winfo_children():
+                widget.destroy()
 
         games = game_service.get_all_games()
 
         for game in games:
-            self._tree.insert("", "end", values=(game.name, game.status))
+            if game.status == "Backlog":
+                parent = self._backlog_frame
+            elif game.status == "In Progress":
+                parent = self._progress_frame
+            else:
+                parent = self._done_frame
+
+            card = ttk.Frame(parent, padding=10, relief="ridge")
+            card.pack(fill="x", pady=5)
+
+            ttk.Label(card, text=game.name, font=("Arial", 11, "bold")).pack(anchor="w")
+
+            status_var = StringVar(value=game.status)
+
+            combo = ttk.Combobox(
+                card,
+                textvariable=status_var,
+                values=["Backlog", "In Progress", "Completed"],
+                state="readonly"
+            )
+            combo.pack(anchor="w")
+
+            combo.bind(
+                "<<ComboboxSelected>>",
+                lambda e, g=game, var=status_var: self._change_status(g.name, var.get())
+            )
 
     def _login(self):
         username = self._username_var.get()

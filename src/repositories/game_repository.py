@@ -34,9 +34,9 @@ class GameRepository:
                                                                         game.status, game.user,))
         self._connection.commit()
 
-    def delete_game(self, name):
+    def delete_game(self, name, user):
         cursor = self._connection.cursor()
-        cursor.execute("delete from games where name = ?", (name,))
+        cursor.execute("delete from games where name = ? and user = ?", (name, user,))
         self._connection.commit()
 
     def delete_all(self):
@@ -44,8 +44,10 @@ class GameRepository:
         cursor.execute("delete from games")
         self._connection.commit()
 
-    def change_status(self):
-        pass
+    def change_status(self, name, user, status):
+        cursor = self._connection.cursor()
+        cursor.execute("update games set status = ? where name = ? and user = ?", (status, name, user, ))
+        self._connection.commit()
 
 
 game_repository = GameRepository(get_database_connection())

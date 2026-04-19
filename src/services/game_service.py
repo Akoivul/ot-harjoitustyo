@@ -14,6 +14,8 @@ class GameService:
         return self._game_repository.find_all_games_by_user(self._logged_in_user.username)
 
     def add_game_to_backlog(self, name, status):
+        if not name or name.strip() == "":
+            raise ValueError("Game name can't be empty")
         if self._game_repository.find_game_by_user(name, self._logged_in_user.username):
             raise ValueError("Game already in backlog")
 
@@ -21,7 +23,10 @@ class GameService:
         return self._game_repository.add_game(game)
 
     def delete_game_from_backlog(self, name):
-        return self._game_repository.delete_game(name)
+        return self._game_repository.delete_game(name, self._logged_in_user.username)
+    
+    def change_game_status(self, name, status):
+        return self._game_repository.change_status(name, self._logged_in_user.username, status)
 
     def register_user(self, username, password):
         if not username or username.strip() == "":

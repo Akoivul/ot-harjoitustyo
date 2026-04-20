@@ -26,7 +26,7 @@ class GameService:
 
     def delete_game_from_backlog(self, name):
         return self._game_repository.delete_game(name, self._logged_in_user.username)
-    
+
     def change_game_status(self, name, status):
         return self._game_repository.change_status(name, self._logged_in_user.username, status)
 

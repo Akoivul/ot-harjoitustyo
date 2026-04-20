@@ -44,3 +44,15 @@ class TestGameService(unittest.TestCase):
 
         with self.assertRaises(Exception):
             game_service.add_game_to_backlog("test_game", "in progress")
+
+    def test_delete_game_from_backlog(self):
+        game_service.login("test_username1", "test_password1")
+        game_service.add_game_to_backlog("test_game", "in progress")
+        games = game_service.get_all_games()
+
+        self.assertEqual(len(games), 1)
+
+        game_service.delete_game_from_backlog("test_game")
+        games = game_service.get_all_games()
+
+        self.assertEqual(len(games), 0)

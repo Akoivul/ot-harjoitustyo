@@ -30,13 +30,14 @@ class GameRepository:
     def add_game(self, game):
         cursor = self._connection.cursor()
         cursor.execute(
-            "insert into games (name, status, user) values (?, ?, ?)", (game.name, 
+            "insert into games (name, status, user) values (?, ?, ?)", (game.name,
                                                                         game.status, game.user,))
         self._connection.commit()
 
     def delete_game(self, name, user):
         cursor = self._connection.cursor()
-        cursor.execute("delete from games where name = ? and user = ?", (name, user,))
+        cursor.execute(
+            "delete from games where name = ? and user = ?", (name, user,))
         self._connection.commit()
 
     def delete_all(self):
@@ -46,7 +47,8 @@ class GameRepository:
 
     def change_status(self, name, user, status):
         cursor = self._connection.cursor()
-        cursor.execute("update games set status = ? where name = ? and user = ?", (status, name, user, ))
+        cursor.execute(
+            "update games set status = ? where name = ? and user = ?", (status, name, user, ))
         self._connection.commit()
 
 

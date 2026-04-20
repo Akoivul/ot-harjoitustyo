@@ -53,13 +53,16 @@ class TestGameRepository(unittest.TestCase):
         self.assertEqual(game.name, self.test_game_1.name)
         self.assertEqual(game.status, self.test_game_1.status)
         self.assertEqual(game.user, self.test_game_1.user)
-    
+
     def test_change_status(self):
         game_repository.add_game(self.test_game_1)
         game_repository.add_game(self.test_game_2)
-        game_repository.change_status(self.test_game_1.name, self.test_game_1.user, "Finished")
-        game_1 = game_repository.find_game_by_user(self.test_game_1.name, self.test_game_1.user)
-        game_2 = game_repository.find_game_by_user(self.test_game_2.name, self.test_game_2.user)
+        game_repository.change_status(
+            self.test_game_1.name, self.test_game_1.user, "Finished")
+        game_1 = game_repository.find_game_by_user(
+            self.test_game_1.name, self.test_game_1.user)
+        game_2 = game_repository.find_game_by_user(
+            self.test_game_2.name, self.test_game_2.user)
 
         self.assertEqual(game_1.status, "Finished")
         self.assertEqual(game_2.status, "In progress")

@@ -41,3 +41,8 @@ Pylint tarkistus:
 ```
 poetry run invoke lint
 ```
+
+Automaattinen formatointi:
+```
+poetry run invoke format
+```

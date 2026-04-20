@@ -1,3 +1,4 @@
+import tkinter as tk
 from tkinter import ttk, StringVar
 from services.game_service import game_service
 
@@ -74,14 +75,13 @@ class UI:
         ttk.Combobox(
             self._root,
             textvariable=self._game_status_var,
-            values=["Backlog", "In Progress", "Completed"],
+            values=["Backlog", "Playing", "Completed"],
             state="readonly"
         ).pack()
 
         ttk.Button(self._root, text="Add", command=self._add_game).pack()
         ttk.Button(self._root, text="Sign out",
                    command=self._show_login).pack()
-
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
         ttk.Separator(self._root, orient="horizontal").pack(fill="x", pady=5)
@@ -94,13 +94,21 @@ class UI:
         board.columnconfigure(2, weight=1, uniform="col")
         board.rowconfigure(0, weight=1)
 
-        self._backlog_frame = ttk.Frame(board, width=300)
-        self._progress_frame = ttk.Frame(board, width=300)
-        self._done_frame = ttk.Frame(board, width=300)
+        self._backlog_frame = ttk.Frame(tk.Canvas(board))
+        self._progress_frame = ttk.Frame(tk.Canvas(board))
+        self._done_frame = ttk.Frame(tk.Canvas(board))
 
-        self._backlog_frame.grid(row=0, column=0, sticky="nsew", padx=5)
-        self._progress_frame.grid(row=0, column=1, sticky="nsew", padx=5)
-        self._done_frame.grid(row=0, column=2, sticky="nsew", padx=5)
+        for column, frame in enumerate([self._backlog_frame, self._progress_frame, self._done_frame]):
+            canvas = frame.master
+            scrollbar = ttk.Scrollbar(board, orient="vertical", command=canvas.yview)
+            canvas.configure(yscrollcommand=scrollbar.set, highlightthickness=0)
+            canvas.create_window((0, 0), window=frame, anchor="nw")
+            frame.bind(
+                "<Configure>",
+                lambda e, c=canvas: c.configure(scrollregion=c.bbox("all"))
+            )
+            canvas.grid(row=0, column=column, sticky="nsew", padx=(5, 0))
+            scrollbar.grid(row=0, column=column, sticky="nse")
 
         self._update_games()
 
@@ -139,7 +147,7 @@ class UI:
         for game in games:
             if game.status == "Backlog":
                 parent = self._backlog_frame
-            elif game.status == "In Progress":
+            elif game.status == "Playing":
                 parent = self._progress_frame
             else:
                 parent = self._done_frame
@@ -158,7 +166,7 @@ class UI:
             combo = ttk.Combobox(
                 row,
                 textvariable=status_var,
-                values=["Backlog", "In Progress", "Completed"],
+                values=["Backlog", "Playing", "Completed"],
                 state="readonly",
                 width=15
             )

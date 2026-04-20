@@ -16,6 +16,8 @@ class GameService:
     def add_game_to_backlog(self, name, status):
         if not name or name.strip() == "":
             raise ValueError("Game name can't be empty")
+        if not status:
+            raise ValueError("Choose status")
         if self._game_repository.find_game_by_user(name, self._logged_in_user.username):
             raise ValueError("Game already in backlog")
 

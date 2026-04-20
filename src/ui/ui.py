@@ -81,25 +81,23 @@ class UI:
 
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
+        ttk.Separator(self._root, orient="horizontal").pack(fill="x", pady=5)
+
         board = ttk.Frame(self._root)
         board.pack(fill="both", expand=True)
 
-        self._backlog_frame = ttk.Frame(board)
-        self._progress_frame = ttk.Frame(board)
-        self._done_frame = ttk.Frame(board)
+        board.columnconfigure(0, weight=1, uniform="col")
+        board.columnconfigure(1, weight=1, uniform="col")
+        board.columnconfigure(2, weight=1, uniform="col")
+        board.rowconfigure(0, weight=1)
 
-        self._backlog_frame.pack(side="left", fill="both", expand=True, padx=10)
-        self._progress_frame.pack(side="left", fill="both", expand=True, padx=10)
-        self._done_frame.pack(side="left", fill="both", expand=True, padx=10)
+        self._backlog_frame = ttk.Frame(board, width=300)
+        self._progress_frame = ttk.Frame(board, width=300)
+        self._done_frame = ttk.Frame(board, width=300)
 
-        ttk.Label(self._backlog_frame, text="Backlog",
-              font=("Arial", 12, "bold")).pack(pady=5)
-
-        ttk.Label(self._progress_frame, text="In Progress",
-                font=("Arial", 12, "bold")).pack(pady=5)
-
-        ttk.Label(self._done_frame, text="Completed",
-                font=("Arial", 12, "bold")).pack(pady=5)
+        self._backlog_frame.grid(row=0, column=0, sticky="nsew", padx=5)
+        self._progress_frame.grid(row=0, column=1, sticky="nsew", padx=5)
+        self._done_frame.grid(row=0, column=2, sticky="nsew", padx=5)
 
         self._update_games()
 
@@ -118,6 +116,10 @@ class UI:
     
     def _change_status(self, name, new_status):
         game_service.change_game_status(name, new_status)
+        self._update_games()
+    
+    def _delete_game(self, name):
+        game_service.delete_game_from_backlog(name)
         self._update_games()
 
     def _update_games(self):
@@ -146,13 +148,23 @@ class UI:
 
             status_var = StringVar(value=game.status)
 
+            row = ttk.Frame(card)
+            row.pack(anchor="w", fill="x", pady=5)
+
             combo = ttk.Combobox(
-                card,
+                row,
                 textvariable=status_var,
                 values=["Backlog", "In Progress", "Completed"],
-                state="readonly"
+                state="readonly",
+                width=15
             )
-            combo.pack(anchor="w")
+            combo.pack(side="left")
+
+            ttk.Button(
+                row,
+                text="Delete",
+                command=lambda g=game: self._delete_game(g.name)
+            ).pack(side="left", padx=10)
 
             combo.bind(
                 "<<ComboboxSelected>>",

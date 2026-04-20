@@ -12,7 +12,7 @@ class GameRepository:
         all_games = cursor.fetchall()
         games = []
         for game in all_games:
-            games.append(Game(game[0], game[1], game[2]))
+            games.append(Game(game["name"], game["status"], game["user"]))
 
         return games
 

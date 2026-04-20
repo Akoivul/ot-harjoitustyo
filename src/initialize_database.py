@@ -23,7 +23,8 @@ def create_tables(connection):
 
     cursor.execute('''
         create table games (
-            name text primary key,
+            id integer primary key,
+            name text,
             status text,
             user text
         );

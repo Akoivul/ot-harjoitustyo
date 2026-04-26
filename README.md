@@ -10,7 +10,13 @@ Sovelluksen avulla voi seurata ja hallita peli backlogia.
 
 [Arkkitehtuuri](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
-## Asennus
+[Release](https://github.com/Akoivul/ot-harjoitustyo/releases/tag/viikko5)
+
+## Asennus ja käynnistäminen
+
+Lataa zip-tiedosto releasesta ja pura tiedosto.
+
+Siirry sovelluksen hakemistoon ja noudata alla olevia ohjeita.
 
 1. Asenna riippuvuudet:
 ```

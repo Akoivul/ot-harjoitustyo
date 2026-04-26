@@ -100,8 +100,10 @@ class UI:
 
         for column, frame in enumerate([self._backlog_frame, self._progress_frame, self._done_frame]):
             canvas = frame.master
-            scrollbar = ttk.Scrollbar(board, orient="vertical", command=canvas.yview)
-            canvas.configure(yscrollcommand=scrollbar.set, highlightthickness=0)
+            scrollbar = ttk.Scrollbar(
+                board, orient="vertical", command=canvas.yview)
+            canvas.configure(yscrollcommand=scrollbar.set,
+                             highlightthickness=0)
             canvas.create_window((0, 0), window=frame, anchor="nw")
             frame.bind(
                 "<Configure>",

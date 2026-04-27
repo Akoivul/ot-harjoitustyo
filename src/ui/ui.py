@@ -8,7 +8,7 @@ class UI:
         self._root = root
 
     def start(self):
-        # generoitu koodi alkaa
+# generoitu koodi alkaa
         self._show_login()
 
     def _clear_view(self):
@@ -65,6 +65,12 @@ class UI:
         self._game_status_var = StringVar()
         self._message_var = StringVar()
 
+        self._status_names = game_service.get_status_names()
+
+        self._root.bind_class("TCombobox", "<MouseWheel>", lambda e: "break")
+        self._root.bind_class("TCombobox", "<Button-4>", lambda e: "break")
+        self._root.bind_class("TCombobox", "<Button-5>", lambda e: "break")
+
         ttk.Label(self._root, text="Game Backlog",
                   font=("Arial", 16, "bold")).pack()
 
@@ -75,11 +81,13 @@ class UI:
         ttk.Combobox(
             self._root,
             textvariable=self._game_status_var,
-            values=["Backlog", "Playing", "Completed"],
+            values=self._status_names,
             state="readonly"
         ).pack()
 
         ttk.Button(self._root, text="Add", command=self._add_game).pack()
+        self._edit_status_button = ttk.Button(self._root, text="Edit status names", command=self._show_edit_status_names)
+        self._edit_status_button.pack()
         ttk.Button(self._root, text="Sign out",
                    command=self._show_login).pack()
         ttk.Label(self._root, textvariable=self._message_var).pack()
@@ -89,30 +97,72 @@ class UI:
         board = ttk.Frame(self._root)
         board.pack(fill="both", expand=True)
 
-        board.columnconfigure(0, weight=1, uniform="col")
-        board.columnconfigure(1, weight=1, uniform="col")
-        board.columnconfigure(2, weight=1, uniform="col")
+        for i in range(3):
+            board.columnconfigure(i, weight=1, uniform="col")
         board.rowconfigure(0, weight=1)
 
-        self._backlog_frame = ttk.Frame(tk.Canvas(board))
-        self._progress_frame = ttk.Frame(tk.Canvas(board))
-        self._done_frame = ttk.Frame(tk.Canvas(board))
+        self._canvases = []
+        self._frames = []
 
-        for column, frame in enumerate([self._backlog_frame, self._progress_frame, self._done_frame]):
-            canvas = frame.master
-            scrollbar = ttk.Scrollbar(
-                board, orient="vertical", command=canvas.yview)
-            canvas.configure(yscrollcommand=scrollbar.set,
-                             highlightthickness=0)
+        for column in range(3):
+            canvas = tk.Canvas(board, highlightthickness=0)
+            scrollbar = ttk.Scrollbar(board, orient="vertical", command=canvas.yview)
+            canvas.configure(yscrollcommand=scrollbar.set)
+
+            frame = ttk.Frame(canvas)
             canvas.create_window((0, 0), window=frame, anchor="nw")
+
             frame.bind(
                 "<Configure>",
                 lambda e, c=canvas: c.configure(scrollregion=c.bbox("all"))
             )
+
             canvas.grid(row=0, column=column, sticky="nsew", padx=(5, 0))
             scrollbar.grid(row=0, column=column, sticky="nse")
 
+            self._canvases.append(canvas)
+            self._frames.append(frame)
+
+        self._backlog_frame = self._frames[0]
+        self._progress_frame = self._frames[1]
+        self._done_frame = self._frames[2]
+
         self._update_games()
+    
+    def _show_edit_status_names(self):
+        self._status_dialog = tk.Toplevel(self._root)
+        self._status_dialog.title("Edit Status Names")
+        self._status_dialog.resizable(False, False)
+        self._status_dialog.error_var = StringVar()
+
+        x = self._edit_status_button.winfo_rootx()
+        y = self._edit_status_button.winfo_rooty() + self._edit_status_button.winfo_height()
+        self._status_dialog.geometry(f"+{x}+{y}")
+
+        self._status_entries = []
+
+        for i, name in enumerate(game_service.get_status_names()):
+            ttk.Label(self._status_dialog, text=f"Column {i + 1}:").grid(
+                row=i, column=0, padx=10, pady=5, sticky="e")
+            var = StringVar(value=name)
+            entry = ttk.Entry(self._status_dialog, textvariable=var, width=20)
+            entry.grid(row=i, column=1, padx=10, pady=5)
+            self._status_entries.append(var)
+
+        ttk.Label(self._status_dialog, textvariable=self._status_dialog.error_var).grid(
+            row=len(self._status_entries), column=0, columnspan=2)
+
+        ttk.Button(self._status_dialog, text="Save", command=self._set_new_status_names).grid(
+            row=len(self._status_entries) + 1, column=0, columnspan=2, pady=10)
+    
+    def _set_new_status_names(self):
+        new_names = [v.get().strip() for v in self._status_entries]
+        try:
+            game_service.set_new_status_names(new_names)
+            self._status_dialog.destroy()
+            self._show_backlog()
+        except Exception as error:
+            self._status_dialog.error_var.set(str(error))
 
     def _add_game(self):
         game_name = self._game_name_var.get()
@@ -122,7 +172,6 @@ class UI:
             game_service.add_game_to_backlog(game_name, game_status)
             self._game_name_var.set("")
             self._game_status_var.set("")
-
             self._update_games()
         except Exception as error:
             self._message_var.set(str(error))
@@ -147,9 +196,9 @@ class UI:
         games = game_service.get_all_games()
 
         for game in games:
-            if game.status == "Backlog":
+            if game.status == self._status_names[0]:
                 parent = self._backlog_frame
-            elif game.status == "Playing":
+            elif game.status == self._status_names[1]:
                 parent = self._progress_frame
             else:
                 parent = self._done_frame
@@ -168,7 +217,7 @@ class UI:
             combo = ttk.Combobox(
                 row,
                 textvariable=status_var,
-                values=["Backlog", "Playing", "Completed"],
+                values=self._status_names,
                 state="readonly",
                 width=15
             )

@@ -6,16 +6,16 @@ Sovelluksen avulla käyttäjä voi seurata ja hallita peli backlogiaan eli pitä
 ## Käyttäjät
 Sovelluksessa on vain yksi käyttäjätyyppi, jolla on oma hallittava backlog.
 
-## Perusversion suunnitellut toiminnallisuudet
+## Sovelluksen toiminnallisuudet
 - Käyttäjä voi luoda käyttäjätunnuksen ja kirjautua sisään - tehty
 - Käyttäjä voi lisätä pelejä backlogiin - tehty
 - Käyttäjä voi muuttaa pelin tilaa backlogissa (pelaamatta, kesken, pelattu) - tehty
 - Käyttäjä näkee kaikki lisäämänsä pelit - tehty
 - Käyttäjä voi poistaa pelin backlogista - tehty
 - Käyttäjä voi kirjautua ulos - tehty
+- Käyttäjä voi muuttaa backlogissa olevien tilojen nimet - tehty
 
 ## Jatkokehitysideoita
-- Pelin tietojen muokkaus
 - Mahdollisuus lisätä enemmän tietoja peleistä
 - Pelien järjestäminen prioriteetin mukaan
 - Pelatuksi merkinnän jälkeen voisi lisätä siihen kuluneen ajan ja lyhyen arvostelun pelistä

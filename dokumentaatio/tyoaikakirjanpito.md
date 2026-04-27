@@ -11,4 +11,5 @@
 | 19.4 | 3 | Luokkakaavion korjaus, pelin tilan muuttamisen lisääminen, pelin tilan muuttamiselle yksi testi, käyttöliittymän päivittäminen, yleisiä parannuksia metodeihin ja testeihin |
 | 20.4 | 3 | Pelin poistamisen lisääminen, testi pelin poistamiselle, käyttöliittymän päivittäminen, sekvenssikaavio pelin lisäämiselle, format invoke task |
 | 26.4 | 1 | Lisätty docstring-dokumentointia Game-, User- ja GameRepository-luokkiin |
-| Yhteensä | 24 |
+| 27.4 | 5 | Tilojen nimien muuttamisen lisääminen, GameService-luokan metodien refaktorointia pienemmiksi paloiksi, testejä UserRepository-luokan uusille metodeille tilojen nimien etsimiselle ja muuttamiselle, testejä GameService-luokan tilojen nimien muuttamisesta vastaavalle metodille ja rekisteröinnin sekä pelin lisäämisen metodeille |
+| Yhteensä | 29 |

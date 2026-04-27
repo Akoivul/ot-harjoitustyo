@@ -31,20 +31,21 @@ class UserRepository:
         cursor.execute("insert into users (username, password) values (?, ?)",
                        (user.username, user.password))
         self._connection.commit()
-    
+
     def find_status_names(self, username):
         cursor = self._connection.cursor()
-        cursor.execute("select statuses from users where username = ?", (username,))
+        cursor.execute(
+            "select statuses from users where username = ?", (username,))
         found_statuses = cursor.fetchone()
 
         return found_statuses["statuses"].split(",")
-    
+
     def change_status_names(self, status_names, username):
         new_status_names = ",".join(status_names)
         cursor = self._connection.cursor()
-        cursor.execute("update users set statuses = ? where username = ?", (new_status_names, username))
+        cursor.execute(
+            "update users set statuses = ? where username = ?", (new_status_names, username))
         self._connection.commit()
-
 
     def delete_all(self):
         cursor = self._connection.cursor()

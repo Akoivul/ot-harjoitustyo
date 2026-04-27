@@ -8,7 +8,7 @@ class UI:
         self._root = root
 
     def start(self):
-# generoitu koodi alkaa
+        # generoitu koodi alkaa
         self._show_login()
 
     def _clear_view(self):
@@ -86,7 +86,8 @@ class UI:
         ).pack()
 
         ttk.Button(self._root, text="Add", command=self._add_game).pack()
-        self._edit_status_button = ttk.Button(self._root, text="Edit status names", command=self._show_edit_status_names)
+        self._edit_status_button = ttk.Button(
+            self._root, text="Edit status names", command=self._show_edit_status_names)
         self._edit_status_button.pack()
         ttk.Button(self._root, text="Sign out",
                    command=self._show_login).pack()
@@ -106,7 +107,8 @@ class UI:
 
         for column in range(3):
             canvas = tk.Canvas(board, highlightthickness=0)
-            scrollbar = ttk.Scrollbar(board, orient="vertical", command=canvas.yview)
+            scrollbar = ttk.Scrollbar(
+                board, orient="vertical", command=canvas.yview)
             canvas.configure(yscrollcommand=scrollbar.set)
 
             frame = ttk.Frame(canvas)
@@ -128,7 +130,7 @@ class UI:
         self._done_frame = self._frames[2]
 
         self._update_games()
-    
+
     def _show_edit_status_names(self):
         self._status_dialog = tk.Toplevel(self._root)
         self._status_dialog.title("Edit Status Names")
@@ -154,7 +156,7 @@ class UI:
 
         ttk.Button(self._status_dialog, text="Save", command=self._set_new_status_names).grid(
             row=len(self._status_entries) + 1, column=0, columnspan=2, pady=10)
-    
+
     def _set_new_status_names(self):
         new_names = [v.get().strip() for v in self._status_entries]
         try:

@@ -21,6 +21,14 @@ class TestGameService(unittest.TestCase):
         with self.assertRaises(Exception):
             game_service.register_user("test_username1", "test_password2")
 
+    def test_register_user_when_username_empty(self):
+        with self.assertRaises(Exception):
+            game_service.register_user("", "test_password2")
+
+    def test_register_user_when_password_empty(self):
+        with self.assertRaises(Exception):
+            game_service.register_user("test_username2", "")
+
     def test_login_successfully(self):
         user = game_service.login("test_username1", "test_password1")
 
@@ -45,6 +53,18 @@ class TestGameService(unittest.TestCase):
         with self.assertRaises(Exception):
             game_service.add_game_to_backlog("test_game", "in progress")
 
+    def test_add_game_with_empty_name_to_backlog(self):
+        game_service.login("test_username1", "test_password1")
+
+        with self.assertRaises(Exception):
+            game_service.add_game_to_backlog("", "in progress")
+
+    def test_add_game_with_no_status_to_backlog(self):
+        game_service.login("test_username1", "test_password1")
+
+        with self.assertRaises(Exception):
+            game_service.add_game_to_backlog("test_game", "")
+
     def test_delete_game_from_backlog(self):
         game_service.login("test_username1", "test_password1")
         game_service.add_game_to_backlog("test_game", "in progress")
@@ -56,3 +76,26 @@ class TestGameService(unittest.TestCase):
         games = game_service.get_all_games()
 
         self.assertEqual(len(games), 0)
+
+    def test_set_new_status_names_successfully(self):
+        game_service.login("test_username1", "test_password1")
+        new_status_names = ["Wishlist", "Currently playing", "Finished"]
+        game_service.set_new_status_names(new_status_names)
+
+        changed_status_names = game_service.get_status_names()
+
+        self.assertEqual(new_status_names, changed_status_names)
+
+    def test_set_new_status_names_with_empty_status(self):
+        game_service.login("test_username1", "test_password1")
+        new_status_names = ["Wishlist", "Currently playing", ""]
+
+        with self.assertRaises(Exception):
+            game_service.set_new_status_names(new_status_names)
+
+    def test_set_new_status_names_with_duplicate_status_names(self):
+        game_service.login("test_username1", "test_password1")
+        new_status_names = ["Wishlist", "Finished", "Finished"]
+
+        with self.assertRaises(Exception):
+            game_service.set_new_status_names(new_status_names)

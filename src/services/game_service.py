@@ -7,6 +7,7 @@ from repositories.user_repository import user_repository
 class GameService:
     """Class that handles game and user related operations.
     """
+
     def __init__(self, game_repository, user_repository):
         """Constructor that initializes GameService with game and user repositories.
 

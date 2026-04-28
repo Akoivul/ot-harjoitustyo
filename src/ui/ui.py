@@ -6,6 +6,7 @@ from services.game_service import game_service
 class UI:
     """Class that handles the graphical user interface.
     """
+
     def __init__(self, root):
         """Constructor that initializes UI.
 

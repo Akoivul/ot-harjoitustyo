@@ -5,6 +5,7 @@ from database_connection import get_database_connection
 class GameRepository:
     """Class that handles database operations for games.
     """
+
     def __init__(self, connection):
         """Constructor that initializes GameRepository.
 

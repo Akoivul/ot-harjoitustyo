@@ -5,6 +5,7 @@ from database_connection import get_database_connection
 class UserRepository:
     """Class that handles database operations for users.
     """
+
     def __init__(self, connection):
         """Constructor that initializes UserRepository.
 

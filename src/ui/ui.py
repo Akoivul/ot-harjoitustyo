@@ -4,18 +4,31 @@ from services.game_service import game_service
 
 
 class UI:
+    """Class that handles the graphical user interface.
+    """
     def __init__(self, root):
+        """Constructor that initializes UI.
+
+        Args:
+            root: Tkinter root window.
+        """
         self._root = root
 
     def start(self):
-        # generoitu koodi alkaa
+        """Starts the application with the login view.
+        """
+# generoitu koodi alkaa
         self._show_login()
 
     def _clear_view(self):
+        """Remove all widgets from the root window.
+        """
         for widget in self._root.winfo_children():
             widget.destroy()
 
     def _show_login(self):
+        """Show the login view.
+        """
         self._clear_view()
 
         self._username_var = StringVar()
@@ -37,6 +50,8 @@ class UI:
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
     def _show_register(self):
+        """Show the registration view.
+        """
         self._clear_view()
 
         self._username_var = StringVar()
@@ -59,6 +74,8 @@ class UI:
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
     def _show_backlog(self):
+        """Show the backlog view with forms for adding games and added games.
+        """
         self._clear_view()
 
         self._game_name_var = StringVar()
@@ -132,6 +149,8 @@ class UI:
         self._update_games()
 
     def _show_edit_status_names(self):
+        """Show window with status names that can be edited.
+        """
         self._status_dialog = tk.Toplevel(self._root)
         self._status_dialog.title("Edit Status Names")
         self._status_dialog.resizable(False, False)
@@ -158,6 +177,8 @@ class UI:
             row=len(self._status_entries) + 1, column=0, columnspan=2, pady=10)
 
     def _set_new_status_names(self):
+        """Saves the updated status names.
+        """
         new_names = [v.get().strip() for v in self._status_entries]
         try:
             game_service.set_new_status_names(new_names)
@@ -167,6 +188,8 @@ class UI:
             self._status_dialog.error_var.set(str(error))
 
     def _add_game(self):
+        """Adds a new game to the backlog.
+        """
         game_name = self._game_name_var.get()
         game_status = self._game_status_var.get()
 
@@ -179,14 +202,27 @@ class UI:
             self._message_var.set(str(error))
 
     def _change_status(self, name, new_status):
+        """Change the status of a game.
+
+        Args:
+            name (str): The name of the game.
+            new_status (str): The new status for the game.
+        """
         game_service.change_game_status(name, new_status)
         self._update_games()
 
     def _delete_game(self, name):
+        """Deletes a game from the backlog.
+
+        Args:
+            name (str): The name of the game to be deleted.
+        """
         game_service.delete_game_from_backlog(name)
         self._update_games()
 
     def _update_games(self):
+        """Updates the lists of added games.
+        """
         for frame in [
             self._backlog_frame,
             self._progress_frame,
@@ -238,6 +274,8 @@ class UI:
             )
 
     def _login(self):
+        """Logs in a user.  
+        """
         username = self._username_var.get()
         password = self._password_var.get()
 
@@ -248,6 +286,8 @@ class UI:
             self._message_var.set(str(error))
 
     def _register(self):
+        """Registers a user.
+        """
         username = self._username_var.get()
         password = self._password_var.get()
 

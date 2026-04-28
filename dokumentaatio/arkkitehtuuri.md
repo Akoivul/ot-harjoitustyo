@@ -2,6 +2,9 @@
 ## Sovelluksen rakennekuvaus
 Sovelluksen rakenne on jaettu neljään osaan: **ui**, **services**, **repositories** ja **entities**, missä **ui** vastaa käyttöliittymästä, **services** vastaa sovelluslogiikasta, **repositories** vastaa tietojen tallennuksesta tietokantaan ja **entities** sisältää luokat käsiteltäville olioille.
 
+### Sovelluksen rakennetta kuvaava pakkauskaavio:
+
+![Pakkauskaavio](./kuvat/pakkauskaavio.png)
 
 ## Sovelluslogiikan kuvaus
 Luokka GameService vastaa sovelluslogiikasta ja sen metodeja suoritetaan käyttöliittymän kautta. Metodit toteuttavat käyttäjien rekisteröinnin ja kirjautumisen sekä pelien hallinnan. GameService hallitsee Game- ja User-luokkien olioita GameRepository- ja UserRepository-luokkien kautta.

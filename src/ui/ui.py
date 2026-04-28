@@ -152,10 +152,19 @@ class UI:
     def _show_edit_status_names(self):
         """Show window with status names that can be edited.
         """
+
+        if hasattr(self, "_status_dialog") and self._status_dialog and self._status_dialog.winfo_exists():
+            self._status_dialog.lift()
+            self._status_dialog.focus_force()
+            return
+
         self._status_dialog = tk.Toplevel(self._root)
         self._status_dialog.title("Edit Status Names")
         self._status_dialog.resizable(False, False)
-        self._status_dialog.error_var = StringVar()
+        self._status_dialog.error_var = tk.StringVar()
+
+        self._status_dialog.transient(self._root)
+        self._status_dialog.grab_set()
 
         x = self._edit_status_button.winfo_rootx()
         y = self._edit_status_button.winfo_rooty() + self._edit_status_button.winfo_height()
@@ -166,16 +175,24 @@ class UI:
         for i, name in enumerate(game_service.get_status_names()):
             ttk.Label(self._status_dialog, text=f"Column {i + 1}:").grid(
                 row=i, column=0, padx=10, pady=5, sticky="e")
-            var = StringVar(value=name)
+            var = tk.StringVar(value=name)
             entry = ttk.Entry(self._status_dialog, textvariable=var, width=20)
             entry.grid(row=i, column=1, padx=10, pady=5)
             self._status_entries.append(var)
 
-        ttk.Label(self._status_dialog, textvariable=self._status_dialog.error_var).grid(
-            row=len(self._status_entries), column=0, columnspan=2)
+        ttk.Label(
+            self._status_dialog,
+            textvariable=self._status_dialog.error_var
+        ).grid(row=len(self._status_entries), column=0, columnspan=2)
 
-        ttk.Button(self._status_dialog, text="Save", command=self._set_new_status_names).grid(
-            row=len(self._status_entries) + 1, column=0, columnspan=2, pady=10)
+        ttk.Button(
+            self._status_dialog,
+            text="Save",
+            command=self._set_new_status_names
+        ).grid(row=len(self._status_entries) + 1, column=0, columnspan=2, pady=10)
+
+        self._status_dialog.protocol(
+            "WM_DELETE_WINDOW", self._on_close_status_dialog)
 
     def _set_new_status_names(self):
         """Saves the updated status names.
@@ -184,9 +201,17 @@ class UI:
         try:
             game_service.set_new_status_names(new_names)
             self._status_dialog.destroy()
+            self._status_dialog = None
             self._show_backlog()
         except Exception as error:
             self._status_dialog.error_var.set(str(error))
+
+    def _on_close_status_dialog(self):
+        """Handles window close.
+        """
+        self._status_dialog.grab_release()
+        self._status_dialog.destroy()
+        self._status_dialog = None
 
     def _add_game(self):
         """Adds a new game to the backlog.

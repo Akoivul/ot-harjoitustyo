@@ -13,4 +13,5 @@
 | 26.4 | 1 | Lisätty docstring-dokumentointia Game-, User- ja GameRepository-luokkiin |
 | 27.4 | 5 | Tilojen nimien muuttamisen lisääminen, GameService-luokan metodien refaktorointia pienemmiksi paloiksi, testejä UserRepository-luokan uusille metodeille tilojen nimien etsimiselle ja muuttamiselle, testejä GameService-luokan tilojen nimien muuttamisesta vastaavalle metodille ja rekisteröinnin sekä pelin lisäämisen metodeille |
 | 28.4 | 5 | Lisätty docstring-dokumentointia UserRepository-, GameService- ja UI-luokkiin, alustava arkkitehtuurikuvaus, alustava käyttöohje, korjattu käyttöliittymää |
-| Yhteensä | 34 |
+| 7.5 | 2 | Tietokannan nimen konfiguroimisen lisääminen ja erillisen tietokannan käyttö testeille |
+| Yhteensä | 36 |

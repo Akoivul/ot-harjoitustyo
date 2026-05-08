@@ -1,6 +1,12 @@
 # Käyttöohje
 
-## Sovelluksen käynnistäminen
+## Sovelluksen asennus ja käynnistäminen
+Lataa zip-tiedosto uusimmasta [releasesta](https://github.com/Akoivul/ot-harjoitustyo/releases) ja pura tiedosto.
+
+Siirry sovelluksen hakemistoon ja noudata alla olevia ohjeita.
+
+Tallentamiseen käytettävän tiedoston nimi on määritelty .env-tiedostossa, ja sen nimeä voi muuttaa.
+
 Asenna riippuvuudet:
 ```
 poetry install

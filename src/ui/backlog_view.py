@@ -24,6 +24,8 @@ class BacklogView:
         self._update_games()
 
     def _build(self):
+        ttk.Label(self._root, text=f"Logged in: {game_service.get_logged_in_user()}", font=(
+            "Arial", 12)).pack(anchor="nw", padx=10, pady=5)
         ttk.Label(self._root, text="Game Backlog",
                   font=("Arial", 16, "bold")).pack()
 

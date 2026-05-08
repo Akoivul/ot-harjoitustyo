@@ -162,6 +162,14 @@ class GameService:
         """
         return self._game_repository.change_status(name, self._logged_in_user.username, status)
 
+    def get_logged_in_user(self):
+        """Get currently logged in users username.
+
+        Returns:
+            Currently logged in users username.
+        """
+        return self._logged_in_user.username
+
     def register_user(self, username, password):
         """Registers a new user.
 

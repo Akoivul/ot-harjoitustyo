@@ -1,6 +1,6 @@
 # Game Backlog
 
-Sovelluksen avulla voi seurata ja hallita peli backlogia.
+Sovelluksen avulla voi seurata ja hallita omaa peli backlogia.
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
@@ -11,6 +11,8 @@ Sovelluksen avulla voi seurata ja hallita peli backlogia.
 [Arkkitehtuuri](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
 [Käyttöohje](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+
+[Testaus](https://github.com/Akoivul/ot-harjoitustyo/blob/master/dokumentaatio/testaus.md)
 
 ## Releaset
 

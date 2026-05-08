@@ -1,6 +1,3 @@
-import tkinter as tk
-from tkinter import ttk, StringVar
-from services.game_service import game_service
 from ui.login_view import LoginView
 from ui.register_view import RegisterView
 from ui.backlog_view import BacklogView

@@ -1,0 +1,1 @@
+![coverage-report](./kuvat/coverage-report.png)

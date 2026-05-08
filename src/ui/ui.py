@@ -5,6 +5,7 @@ from ui.login_view import LoginView
 from ui.register_view import RegisterView
 from ui.backlog_view import BacklogView
 
+
 class UI:
     """Class that handles the graphical user interface.
     """

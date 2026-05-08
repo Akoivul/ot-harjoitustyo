@@ -3,6 +3,8 @@ from tkinter import ttk
 from services.game_service import game_service
 
 # generoitu koodi alkaa
+
+
 class RegisterView:
     def __init__(self, root, show_login):
         self._root = root
@@ -13,7 +15,7 @@ class RegisterView:
         self._message_var = StringVar()
 
         self._build()
-    
+
     def _build(self):
         ttk.Label(self._root, text="Register",
                   font=("Arial", 16, "bold")).pack()
@@ -29,13 +31,14 @@ class RegisterView:
                    command=self._show_login).pack()
 
         ttk.Label(self._root, textvariable=self._message_var).pack()
-    
+
     def _register(self):
         """Registers a user.
         """
 
         try:
-            game_service.register_user(self._username_var.get(), self._password_var.get())
+            game_service.register_user(
+                self._username_var.get(), self._password_var.get())
             self._message_var.set("User registered successfully")
             self._root.after(1000, self._show_login)
         except Exception as error:

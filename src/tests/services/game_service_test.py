@@ -10,6 +10,7 @@ class TestGameService(unittest.TestCase):
         user_repository.delete_all()
         self.test_registered_user = game_service.register_user(
             "test_username1", "test_password1")
+        self.default_statuses = ["Backlog", "Playing", "Completed"]
 
     def test_register_user_successfully(self):
         game_service.register_user("test_username2", "test_password2")
@@ -40,24 +41,25 @@ class TestGameService(unittest.TestCase):
 
     def test_add_game_to_backlog_successfully(self):
         game_service.login("test_username1", "test_password1")
-        game_service.add_game_to_backlog("test_game", "in progress")
+        game_service.add_game_to_backlog("test_game", self.default_statuses[1])
         games = game_service.get_all_games()
 
         self.assertEqual(games[0].name, "test_game")
-        self.assertEqual(games[0].status, "in progress")
+        self.assertEqual(games[0].status, self.default_statuses[1])
 
     def test_add_game_to_backlog_when_game_is_already_in_backlog(self):
         game_service.login("test_username1", "test_password1")
-        game_service.add_game_to_backlog("test_game", "in progress")
+        game_service.add_game_to_backlog("test_game", self.default_statuses[0])
 
         with self.assertRaises(Exception):
-            game_service.add_game_to_backlog("test_game", "in progress")
+            game_service.add_game_to_backlog(
+                "test_game", self.default_statuses[0])
 
     def test_add_game_with_empty_name_to_backlog(self):
         game_service.login("test_username1", "test_password1")
 
         with self.assertRaises(Exception):
-            game_service.add_game_to_backlog("", "in progress")
+            game_service.add_game_to_backlog("", self.default_statuses[1])
 
     def test_add_game_with_no_status_to_backlog(self):
         game_service.login("test_username1", "test_password1")
@@ -67,7 +69,7 @@ class TestGameService(unittest.TestCase):
 
     def test_delete_game_from_backlog(self):
         game_service.login("test_username1", "test_password1")
-        game_service.add_game_to_backlog("test_game", "in progress")
+        game_service.add_game_to_backlog("test_game", self.default_statuses[1])
         games = game_service.get_all_games()
 
         self.assertEqual(len(games), 1)
@@ -99,3 +101,12 @@ class TestGameService(unittest.TestCase):
 
         with self.assertRaises(Exception):
             game_service.set_new_status_names(new_status_names)
+
+    def test_setting_new_status_names_updates_status_of_added_games(self):
+        game_service.login("test_username1", "test_password1")
+        game_service.add_game_to_backlog("test_game", self.default_statuses[1])
+        new_status_names = ["Wishlist", "Currently playing", "Finished"]
+        game_service.set_new_status_names(new_status_names)
+
+        games = game_service.get_all_games()
+        self.assertEqual(games[0].status, new_status_names[1])

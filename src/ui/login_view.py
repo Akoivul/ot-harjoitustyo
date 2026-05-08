@@ -2,6 +2,7 @@ from tkinter import StringVar
 from tkinter import ttk
 from services.game_service import game_service
 
+
 class LoginView(ttk.Frame):
     """Login view.
     """
@@ -17,7 +18,7 @@ class LoginView(ttk.Frame):
         self._message_var = StringVar()
 
         self._build()
-    
+
     def _build(self):
         ttk.Label(self._root, text="Login", font=("Arial", 16, "bold")).pack()
 
@@ -32,13 +33,14 @@ class LoginView(ttk.Frame):
                    command=self._show_register).pack()
 
         ttk.Label(self._root, textvariable=self._message_var).pack()
-    
+
     def _login(self):
         """Logs in a user.  
         """
 
         try:
-            game_service.login(self._username_var.get(), self._password_var.get())
+            game_service.login(self._username_var.get(),
+                               self._password_var.get())
             self._show_backlog()
         except Exception as error:
             self._message_var.set(str(error))

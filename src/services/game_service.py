@@ -8,7 +8,7 @@ class GameService:
     """Class that handles game and user related operations.
     """
 
-    def __init__(self, game_repository, user_repository):
+    def __init__(self):
         """Constructor that initializes GameService with game and user repositories.
 
         Args:
@@ -224,4 +224,4 @@ class GameService:
         raise ValueError("Wrong username or password")
 
 
-game_service = GameService(game_repository, user_repository)
+game_service = GameService()

@@ -6,6 +6,8 @@ from services.game_service import game_service
 from ui.status_dialog import StatusDialog
 
 # generoitu koodi alkaa
+
+
 class BacklogView:
     def __init__(self, root, show_login):
         self._root = root
@@ -20,9 +22,10 @@ class BacklogView:
         self._bind_combobox_scroll()
         self._build()
         self._update_games()
-    
+
     def _build(self):
-        ttk.Label(self._root, text="Game Backlog", font=("Arial", 16, "bold")).pack()
+        ttk.Label(self._root, text="Game Backlog",
+                  font=("Arial", 16, "bold")).pack()
 
         ttk.Label(self._root, text="Game").pack()
         ttk.Entry(self._root, textvariable=self._game_name_var).pack()
@@ -37,22 +40,24 @@ class BacklogView:
 
         ttk.Button(self._root, text="Add", command=self._add_game).pack()
 
-        self._edit_status_button = ttk.Button(self._root, text="Edit status names", command=self._show_edit_status_names)
+        self._edit_status_button = ttk.Button(
+            self._root, text="Edit status names", command=self._show_edit_status_names)
         self._edit_status_button.pack()
 
-        ttk.Button(self._root, text="Sign out", command=self._show_login).pack()
+        ttk.Button(self._root, text="Sign out",
+                   command=self._show_login).pack()
 
         ttk.Label(self._root, textvariable=self._message_var).pack()
 
         ttk.Separator(self._root, orient="horizontal").pack(fill="x", pady=5)
 
         self._create_board()
-    
+
     def _bind_combobox_scroll(self):
         self._root.bind_class("TCombobox", "<MouseWheel>", lambda e: "break")
         self._root.bind_class("TCombobox", "<Button-4>", lambda e: "break")
         self._root.bind_class("TCombobox", "<Button-5>", lambda e: "break")
-    
+
     def _create_board(self):
         board = ttk.Frame(self._root)
         board.pack(fill="both", expand=True)
@@ -66,14 +71,16 @@ class BacklogView:
 
         for col in range(3):
             canvas = tk.Canvas(board, highlightthickness=0)
-            scrollbar = ttk.Scrollbar(board, orient="vertical", command=canvas.yview)
+            scrollbar = ttk.Scrollbar(
+                board, orient="vertical", command=canvas.yview)
 
             canvas.configure(yscrollcommand=scrollbar.set)
 
             frame = ttk.Frame(canvas)
             canvas.create_window((0, 0), window=frame, anchor="nw")
 
-            frame.bind("<Configure>", lambda e, c=canvas: c.configure(scrollregion=c.bbox("all")))
+            frame.bind("<Configure>", lambda e,
+                       c=canvas: c.configure(scrollregion=c.bbox("all")))
 
             canvas.grid(row=0, column=col, sticky="nsew", padx=(5, 0))
             scrollbar.grid(row=0, column=col, sticky="nse")
@@ -83,7 +90,7 @@ class BacklogView:
         self._backlog_frame = self._frames[0]
         self._progress_frame = self._frames[1]
         self._done_frame = self._frames[2]
-    
+
     def _add_game(self):
         try:
             game_service.add_game_to_backlog(
@@ -99,7 +106,7 @@ class BacklogView:
 
         except Exception as error:
             self._message_var.set(str(error))
-    
+
     def _change_status(self, name, status):
         game_service.change_game_status(name, status)
         self._update_games()
@@ -126,7 +133,8 @@ class BacklogView:
             card = ttk.Frame(parent, padding=10, relief="ridge")
             card.pack(fill="x", pady=5)
 
-            ttk.Label(card, text=game.name, font=("Arial", 11, "bold")).pack(anchor="w")
+            ttk.Label(card, text=game.name, font=(
+                "Arial", 11, "bold")).pack(anchor="w")
 
             status_var = StringVar(value=game.status)
 
@@ -147,9 +155,10 @@ class BacklogView:
 
             combo.bind(
                 "<<ComboboxSelected>>",
-                lambda e, g=game, v=status_var: self._change_status(g.name, v.get())
+                lambda e, g=game, v=status_var: self._change_status(
+                    g.name, v.get())
             )
-    
+
     def _show_edit_status_names(self):
         StatusDialog(self._root, self._refresh_status_names)
 

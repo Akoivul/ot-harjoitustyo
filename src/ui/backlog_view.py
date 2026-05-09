@@ -33,12 +33,13 @@ class BacklogView:
         ttk.Entry(self._root, textvariable=self._game_name_var).pack()
 
         ttk.Label(self._root, text="Status").pack()
-        ttk.Combobox(
+        self._status_combobox = ttk.Combobox(
             self._root,
             textvariable=self._game_status_var,
             values=self._status_names,
             state="readonly"
-        ).pack()
+        )
+        self._status_combobox.pack()
 
         ttk.Button(self._root, text="Add", command=self._add_game).pack()
 
@@ -166,6 +167,8 @@ class BacklogView:
 
     def _refresh_status_names(self):
         self._status_names = game_service.get_status_names()
+        self._status_combobox["values"] = self._status_names
+        self._game_status_var.set("")
         self._update_games()
 
     def _show_login(self):

@@ -20,6 +20,8 @@ Sovelluksen avulla voi seurata ja hallita omaa peli backlogia.
 
 [Release viikko 6](https://github.com/Akoivul/ot-harjoitustyo/releases/tag/viikko6)
 
+[Loppupalautus](https://github.com/Akoivul/ot-harjoitustyo/releases/tag/loppupalautus)
+
 ## Asennus ja käynnistäminen
 
 Lataa zip-tiedosto releasesta ja pura tiedosto.

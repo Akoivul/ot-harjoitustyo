@@ -31,5 +31,10 @@
 - Käyttäjä voi muokata tilojen nimiä
 - Lisätty GameService- ja UserRepository-luokkiin metodeja tilon nimien muokkauksen mahdollistamiseksi
 - Lisätty käyttöliittymään tilojen nimien muokkaamiseen avautuva oma ikkuna
-- Testattu GameService-luokan metodeja eli, että tilojen nimien muokkaaminen toimii oikein eli ei onnistu, jos jokin nimistä on tyhjä tai nimet eivät ole uniikkeja.
-- Testattu UserRepositoryn metodeja, joilla voi etsiä käyttäjän omat tilojen nimet ja muuttaa ne.
+- Testattu GameService-luokan metodeja eli, että tilojen nimien muokkaaminen toimii oikein eli ei onnistu, jos jokin nimistä on tyhjä tai nimet eivät ole uniikkeja
+- Testattu UserRepositoryn metodeja, joilla voi etsiä käyttäjän omat tilojen nimet ja muuttaa ne
+
+## Viikko 7
+
+- Käyttäjä näkee oman käyttäjänimen, kun on kirjautunut sisään
+- Testattu, että pelien tilat päivittyy tilojen nimien muokkaamisen jälkeen
